@@ -13,6 +13,11 @@ namespace ConsoleUI
         {
             //CarManager carManager = new CarManager(new InMemoryCarDal());
 
+            CarTest();
+        }
+
+        private static void CarTest()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
@@ -35,7 +40,7 @@ namespace ConsoleUI
             }
             foreach (var brand in brandManager.GetAll())
             {
-                Console.WriteLine("Marka ID : " + brand.Id + " Model : " + brand.BrandName );
+                Console.WriteLine("Marka ID : " + brand.Id + " Model : " + brand.BrandName);
             }
             foreach (var color in colorManager.GetAll())
             {
