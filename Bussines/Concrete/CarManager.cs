@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -59,6 +60,11 @@ namespace Bussiness.Concrete
         {
             _CarDal.Update(car);
             Console.WriteLine("Araba güncellendi.");
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _CarDal.GetCarDetails();
         }
     }
 }

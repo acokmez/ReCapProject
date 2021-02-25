@@ -13,10 +13,20 @@ namespace ConsoleUI
         {
             //CarManager carManager = new CarManager(new InMemoryCarDal());
 
+            //AllTest();
             CarTest();
         }
 
         private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.BrandName + "/" + car.ColorName + "/" + car.CarName);
+            }
+        }
+
+        private static void AllTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
