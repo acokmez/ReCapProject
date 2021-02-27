@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,37 +17,36 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
+            if (brand.BrandName.Length < 2)
             {
-                _brandDal.Add(brand);
-                Console.WriteLine("Araba markası başarıyla eklendi.");
+                
+                return new ErrorResult(Messages.BrandNameInvalid);
             }
-            else
-            {
-                Console.WriteLine("Araba adı minimum 2 karakter olmalıdır.");
-            }
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandAdded);
+
+
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            Console.WriteLine("Araba Markası silindi.");
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            Console.WriteLine("Tüm araba markaları:");
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
         }
 
-        public Brand GetById(int id)
+        public IDataResult<Brand> GetById(int id)
         {
-            return _brandDal.Get(x => x.Id == id);
+            return new SuccessDataResult<Brand>(_brandDal.Get(x => x.Id == id));
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             Brand brand1 = new Brand();
             brand1.Id = brand.Id;
@@ -53,7 +54,11 @@ namespace Business.Concrete
             if (brand.Id == brand1.Id)
             {
                 _brandDal.Update(brand1);
-                Console.WriteLine("Araba Marka adı güncellendi.");
+                return new SuccessResult(Messages.BrandUpdated);
+            }
+            else
+            {
+                return new ErrorResult(Messages.BrandNotUpdated);
             }
         }
     }
