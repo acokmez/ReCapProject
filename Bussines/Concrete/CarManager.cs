@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bussiness.Concrete
+namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
